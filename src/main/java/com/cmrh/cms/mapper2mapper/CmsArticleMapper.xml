@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cmrh.cms.mapper.CmsArticleMapper" >
+  <resultMap id="BaseResultMap" type="com.cmrh.cms.domain.CmsArticle" >
+    <id column="ARTICLE_ID" property="articleId" jdbcType="BIGINT" />
+    <result column="OPERATE_ID" property="operateId" jdbcType="BIGINT" />
+    <result column="ARTICLE_TYPE" property="articleType" jdbcType="VARCHAR" />
+    <result column="SITE_ID" property="siteId" jdbcType="BIGINT" />
+    <result column="IS_SPECIFIC_TEMPLATE" property="isSpecificTemplate" jdbcType="CHAR" />
+    <result column="SPECIFIC_TEMPLATE_ID" property="specificTemplateId" jdbcType="BIGINT" />
+    <result column="ARTICLE_TITLE" property="articleTitle" jdbcType="VARCHAR" />
+    <result column="SUB_HEADLINE" property="subHeadline" jdbcType="VARCHAR" />
+    <result column="SUB_TITLE" property="subTitle" jdbcType="VARCHAR" />
+    <result column="ARTICLE_PUBLISHER" property="articlePublisher" jdbcType="VARCHAR" />
+    <result column="VIA" property="via" jdbcType="VARCHAR" />
+    <result column="VIA_URI" property="viaUri" jdbcType="VARCHAR" />
+    <result column="PUBLISHED_DATE" property="publishedDate" jdbcType="TIMESTAMP" />
+    <result column="PUBLISH_VERSION" property="publishVersion" jdbcType="BIGINT" />
+    <result column="PREV_PUBLISH_VERSION" property="prevPublishVersion" jdbcType="BIGINT" />
+    <result column="publish_state" property="publishState" jdbcType="VARCHAR" />
+    <result column="IS_LOCKED" property="isLocked" jdbcType="VARCHAR" />
+    <result column="CREATED_USER" property="createdUser" jdbcType="VARCHAR" />
+    <result column="CREATED_DATE" property="createdDate" jdbcType="TIMESTAMP" />
+    <result column="UPDATED_DATE" property="updatedDate" jdbcType="TIMESTAMP" />
+    <result column="UPDATED_USER" property="updatedUser" jdbcType="VARCHAR" />
+    <result column="IS_VALID" property="isValid" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.cmrh.cms.domain.CmsArticleWithBLOBs" extends="BaseResultMap" >
+    <result column="LOGO_PICTURE" property="logoPicture" jdbcType="LONGVARCHAR" />
+    <result column="ARTICLE_OUTLINE" property="articleOutline" jdbcType="LONGVARCHAR" />
+    <result column="ARTICLE_CONTENT" property="articleContent" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ARTICLE_ID, OPERATE_ID, ARTICLE_TYPE, SITE_ID, IS_SPECIFIC_TEMPLATE, SPECIFIC_TEMPLATE_ID, 
+    ARTICLE_TITLE, SUB_HEADLINE, SUB_TITLE, ARTICLE_PUBLISHER, VIA, VIA_URI, PUBLISHED_DATE, 
+    PUBLISH_VERSION, PREV_PUBLISH_VERSION, publish_state, IS_LOCKED, CREATED_USER, CREATED_DATE, 
+    UPDATED_DATE, UPDATED_USER, IS_VALID
+  </sql>
+  <sql id="Blob_Column_List" >
+    LOGO_PICTURE, ARTICLE_OUTLINE, ARTICLE_CONTENT
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from cms_article
+    where ARTICLE_ID = #{articleId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from cms_article
+    where ARTICLE_ID = #{articleId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.cmrh.cms.domain.CmsArticleWithBLOBs" >
+    insert into cms_article (ARTICLE_ID, OPERATE_ID, ARTICLE_TYPE, 
+      SITE_ID, IS_SPECIFIC_TEMPLATE, SPECIFIC_TEMPLATE_ID, 
+      ARTICLE_TITLE, SUB_HEADLINE, SUB_TITLE, 
+      ARTICLE_PUBLISHER, VIA, VIA_URI, 
+      PUBLISHED_DATE, PUBLISH_VERSION, PREV_PUBLISH_VERSION, 
+      publish_state, IS_LOCKED, CREATED_USER, 
+      CREATED_DATE, UPDATED_DATE, UPDATED_USER, 
+      IS_VALID, LOGO_PICTURE, ARTICLE_OUTLINE, 
+      ARTICLE_CONTENT)
+    values (#{articleId,jdbcType=BIGINT}, #{operateId,jdbcType=BIGINT}, #{articleType,jdbcType=VARCHAR}, 
+      #{siteId,jdbcType=BIGINT}, #{isSpecificTemplate,jdbcType=CHAR}, #{specificTemplateId,jdbcType=BIGINT}, 
+      #{articleTitle,jdbcType=VARCHAR}, #{subHeadline,jdbcType=VARCHAR}, #{subTitle,jdbcType=VARCHAR}, 
+      #{articlePublisher,jdbcType=VARCHAR}, #{via,jdbcType=VARCHAR}, #{viaUri,jdbcType=VARCHAR}, 
+      #{publishedDate,jdbcType=TIMESTAMP}, #{publishVersion,jdbcType=BIGINT}, #{prevPublishVersion,jdbcType=BIGINT}, 
+      #{publishState,jdbcType=VARCHAR}, #{isLocked,jdbcType=VARCHAR}, #{createdUser,jdbcType=VARCHAR}, 
+      #{createdDate,jdbcType=TIMESTAMP}, #{updatedDate,jdbcType=TIMESTAMP}, #{updatedUser,jdbcType=VARCHAR}, 
+      #{isValid,jdbcType=VARCHAR}, #{logoPicture,jdbcType=LONGVARCHAR}, #{articleOutline,jdbcType=LONGVARCHAR}, 
+      #{articleContent,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cmrh.cms.domain.CmsArticleWithBLOBs" >
+    insert into cms_article
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="articleId != null" >
+        ARTICLE_ID,
+      </if>
+      <if test="operateId != null" >
+        OPERATE_ID,
+      </if>
+      <if test="articleType != null" >
+        ARTICLE_TYPE,
+      </if>
+      <if test="siteId != null" >
+        SITE_ID,
+      </if>
+      <if test="isSpecificTemplate != null" >
+        IS_SPECIFIC_TEMPLATE,
+      </if>
+      <if test="specificTemplateId != null" >
+        SPECIFIC_TEMPLATE_ID,
+      </if>
+      <if test="articleTitle != null" >
+        ARTICLE_TITLE,
+      </if>
+      <if test="subHeadline != null" >
+        SUB_HEADLINE,
+      </if>
+      <if test="subTitle != null" >
+        SUB_TITLE,
+      </if>
+      <if test="articlePublisher != null" >
+        ARTICLE_PUBLISHER,
+      </if>
+      <if test="via != null" >
+        VIA,
+      </if>
+      <if test="viaUri != null" >
+        VIA_URI,
+      </if>
+      <if test="publishedDate != null" >
+        PUBLISHED_DATE,
+      </if>
+      <if test="publishVersion != null" >
+        PUBLISH_VERSION,
+      </if>
+      <if test="prevPublishVersion != null" >
+        PREV_PUBLISH_VERSION,
+      </if>
+      <if test="publishState != null" >
+        publish_state,
+      </if>
+      <if test="isLocked != null" >
+        IS_LOCKED,
+      </if>
+      <if test="createdUser != null" >
+        CREATED_USER,
+      </if>
+      <if test="createdDate != null" >
+        CREATED_DATE,
+      </if>
+      <if test="updatedDate != null" >
+        UPDATED_DATE,
+      </if>
+      <if test="updatedUser != null" >
+        UPDATED_USER,
+      </if>
+      <if test="isValid != null" >
+        IS_VALID,
+      </if>
+      <if test="logoPicture != null" >
+        LOGO_PICTURE,
+      </if>
+      <if test="articleOutline != null" >
+        ARTICLE_OUTLINE,
+      </if>
+      <if test="articleContent != null" >
+        ARTICLE_CONTENT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="articleId != null" >
+        #{articleId,jdbcType=BIGINT},
+      </if>
+      <if test="operateId != null" >
+        #{operateId,jdbcType=BIGINT},
+      </if>
+      <if test="articleType != null" >
+        #{articleType,jdbcType=VARCHAR},
+      </if>
+      <if test="siteId != null" >
+        #{siteId,jdbcType=BIGINT},
+      </if>
+      <if test="isSpecificTemplate != null" >
+        #{isSpecificTemplate,jdbcType=CHAR},
+      </if>
+      <if test="specificTemplateId != null" >
+        #{specificTemplateId,jdbcType=BIGINT},
+      </if>
+      <if test="articleTitle != null" >
+        #{articleTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="subHeadline != null" >
+        #{subHeadline,jdbcType=VARCHAR},
+      </if>
+      <if test="subTitle != null" >
+        #{subTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="articlePublisher != null" >
+        #{articlePublisher,jdbcType=VARCHAR},
+      </if>
+      <if test="via != null" >
+        #{via,jdbcType=VARCHAR},
+      </if>
+      <if test="viaUri != null" >
+        #{viaUri,jdbcType=VARCHAR},
+      </if>
+      <if test="publishedDate != null" >
+        #{publishedDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="publishVersion != null" >
+        #{publishVersion,jdbcType=BIGINT},
+      </if>
+      <if test="prevPublishVersion != null" >
+        #{prevPublishVersion,jdbcType=BIGINT},
+      </if>
+      <if test="publishState != null" >
+        #{publishState,jdbcType=VARCHAR},
+      </if>
+      <if test="isLocked != null" >
+        #{isLocked,jdbcType=VARCHAR},
+      </if>
+      <if test="createdUser != null" >
+        #{createdUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createdDate != null" >
+        #{createdDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedDate != null" >
+        #{updatedDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedUser != null" >
+        #{updatedUser,jdbcType=VARCHAR},
+      </if>
+      <if test="isValid != null" >
+        #{isValid,jdbcType=VARCHAR},
+      </if>
+      <if test="logoPicture != null" >
+        #{logoPicture,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="articleOutline != null" >
+        #{articleOutline,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="articleContent != null" >
+        #{articleContent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cmrh.cms.domain.CmsArticleWithBLOBs" >
+    update cms_article
+    <set >
+      <if test="operateId != null" >
+        OPERATE_ID = #{operateId,jdbcType=BIGINT},
+      </if>
+      <if test="articleType != null" >
+        ARTICLE_TYPE = #{articleType,jdbcType=VARCHAR},
+      </if>
+      <if test="siteId != null" >
+        SITE_ID = #{siteId,jdbcType=BIGINT},
+      </if>
+      <if test="isSpecificTemplate != null" >
+        IS_SPECIFIC_TEMPLATE = #{isSpecificTemplate,jdbcType=CHAR},
+      </if>
+      <if test="specificTemplateId != null" >
+        SPECIFIC_TEMPLATE_ID = #{specificTemplateId,jdbcType=BIGINT},
+      </if>
+      <if test="articleTitle != null" >
+        ARTICLE_TITLE = #{articleTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="subHeadline != null" >
+        SUB_HEADLINE = #{subHeadline,jdbcType=VARCHAR},
+      </if>
+      <if test="subTitle != null" >
+        SUB_TITLE = #{subTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="articlePublisher != null" >
+        ARTICLE_PUBLISHER = #{articlePublisher,jdbcType=VARCHAR},
+      </if>
+      <if test="via != null" >
+        VIA = #{via,jdbcType=VARCHAR},
+      </if>
+      <if test="viaUri != null" >
+        VIA_URI = #{viaUri,jdbcType=VARCHAR},
+      </if>
+      <if test="publishedDate != null" >
+        PUBLISHED_DATE = #{publishedDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="publishVersion != null" >
+        PUBLISH_VERSION = #{publishVersion,jdbcType=BIGINT},
+      </if>
+      <if test="prevPublishVersion != null" >
+        PREV_PUBLISH_VERSION = #{prevPublishVersion,jdbcType=BIGINT},
+      </if>
+      <if test="publishState != null" >
+        publish_state = #{publishState,jdbcType=VARCHAR},
+      </if>
+      <if test="isLocked != null" >
+        IS_LOCKED = #{isLocked,jdbcType=VARCHAR},
+      </if>
+      <if test="createdUser != null" >
+        CREATED_USER = #{createdUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createdDate != null" >
+        CREATED_DATE = #{createdDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedDate != null" >
+        UPDATED_DATE = #{updatedDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedUser != null" >
+        UPDATED_USER = #{updatedUser,jdbcType=VARCHAR},
+      </if>
+      <if test="isValid != null" >
+        IS_VALID = #{isValid,jdbcType=VARCHAR},
+      </if>
+      <if test="logoPicture != null" >
+        LOGO_PICTURE = #{logoPicture,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="articleOutline != null" >
+        ARTICLE_OUTLINE = #{articleOutline,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="articleContent != null" >
+        ARTICLE_CONTENT = #{articleContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ARTICLE_ID = #{articleId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.cmrh.cms.domain.CmsArticleWithBLOBs" >
+    update cms_article
+    set OPERATE_ID = #{operateId,jdbcType=BIGINT},
+      ARTICLE_TYPE = #{articleType,jdbcType=VARCHAR},
+      SITE_ID = #{siteId,jdbcType=BIGINT},
+      IS_SPECIFIC_TEMPLATE = #{isSpecificTemplate,jdbcType=CHAR},
+      SPECIFIC_TEMPLATE_ID = #{specificTemplateId,jdbcType=BIGINT},
+      ARTICLE_TITLE = #{articleTitle,jdbcType=VARCHAR},
+      SUB_HEADLINE = #{subHeadline,jdbcType=VARCHAR},
+      SUB_TITLE = #{subTitle,jdbcType=VARCHAR},
+      ARTICLE_PUBLISHER = #{articlePublisher,jdbcType=VARCHAR},
+      VIA = #{via,jdbcType=VARCHAR},
+      VIA_URI = #{viaUri,jdbcType=VARCHAR},
+      PUBLISHED_DATE = #{publishedDate,jdbcType=TIMESTAMP},
+      PUBLISH_VERSION = #{publishVersion,jdbcType=BIGINT},
+      PREV_PUBLISH_VERSION = #{prevPublishVersion,jdbcType=BIGINT},
+      publish_state = #{publishState,jdbcType=VARCHAR},
+      IS_LOCKED = #{isLocked,jdbcType=VARCHAR},
+      CREATED_USER = #{createdUser,jdbcType=VARCHAR},
+      CREATED_DATE = #{createdDate,jdbcType=TIMESTAMP},
+      UPDATED_DATE = #{updatedDate,jdbcType=TIMESTAMP},
+      UPDATED_USER = #{updatedUser,jdbcType=VARCHAR},
+      IS_VALID = #{isValid,jdbcType=VARCHAR},
+      LOGO_PICTURE = #{logoPicture,jdbcType=LONGVARCHAR},
+      ARTICLE_OUTLINE = #{articleOutline,jdbcType=LONGVARCHAR},
+      ARTICLE_CONTENT = #{articleContent,jdbcType=LONGVARCHAR}
+    where ARTICLE_ID = #{articleId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cmrh.cms.domain.CmsArticle" >
+    update cms_article
+    set OPERATE_ID = #{operateId,jdbcType=BIGINT},
+      ARTICLE_TYPE = #{articleType,jdbcType=VARCHAR},
+      SITE_ID = #{siteId,jdbcType=BIGINT},
+      IS_SPECIFIC_TEMPLATE = #{isSpecificTemplate,jdbcType=CHAR},
+      SPECIFIC_TEMPLATE_ID = #{specificTemplateId,jdbcType=BIGINT},
+      ARTICLE_TITLE = #{articleTitle,jdbcType=VARCHAR},
+      SUB_HEADLINE = #{subHeadline,jdbcType=VARCHAR},
+      SUB_TITLE = #{subTitle,jdbcType=VARCHAR},
+      ARTICLE_PUBLISHER = #{articlePublisher,jdbcType=VARCHAR},
+      VIA = #{via,jdbcType=VARCHAR},
+      VIA_URI = #{viaUri,jdbcType=VARCHAR},
+      PUBLISHED_DATE = #{publishedDate,jdbcType=TIMESTAMP},
+      PUBLISH_VERSION = #{publishVersion,jdbcType=BIGINT},
+      PREV_PUBLISH_VERSION = #{prevPublishVersion,jdbcType=BIGINT},
+      publish_state = #{publishState,jdbcType=VARCHAR},
+      IS_LOCKED = #{isLocked,jdbcType=VARCHAR},
+      CREATED_USER = #{createdUser,jdbcType=VARCHAR},
+      CREATED_DATE = #{createdDate,jdbcType=TIMESTAMP},
+      UPDATED_DATE = #{updatedDate,jdbcType=TIMESTAMP},
+      UPDATED_USER = #{updatedUser,jdbcType=VARCHAR},
+      IS_VALID = #{isValid,jdbcType=VARCHAR}
+    where ARTICLE_ID = #{articleId,jdbcType=BIGINT}
+  </update>
+</mapper>
